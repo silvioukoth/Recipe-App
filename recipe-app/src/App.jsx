@@ -1,11 +1,13 @@
 import Header from './components/Header'
+import RecipeCard from './components/RecipeCard'
+import RecipeForm from './components/RecipeForm'
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <Header />
+      <RecipeCard />
+      <RecipeForm />
     </>
   )
 }
