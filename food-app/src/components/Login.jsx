@@ -43,14 +43,14 @@ const Login = ({ setAuthenticated }) => {
         />
         <button
           type="submit"
-          className="w-full py-2 bg-[#40b48e] text-white rounded-md"
+          className="w-full py-2 bg-[#315e4f] text-white rounded-md"
         >
           Login
         </button>
       </form>
       <p className="mt-4 text-center">
         Don't have an account?{" "}
-        <Link to="/signup" className="text-[#40b48e]">Sign Up</Link>
+        <Link to="/signup" className="text-[#397561]">Sign Up</Link>
       </p>
     </div>
   );
