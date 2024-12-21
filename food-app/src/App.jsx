@@ -69,47 +69,43 @@ function App() {
   return (
     <Router>
       <div
-        className="App flex flex-col items-center min-h-screen bg-cover bg-center brightness-100 w-full overflow-x-hidden"
+        className="App flex flex-col justify-center items-center min-h-screen bg-cover bg-center w-full overflow-x-hidden"
         style={{ backgroundImage: `url(${image})` }}
       >
-        {/* Navbar */}
         <Navbar setAuthenticated={setAuthenticated} />
 
-        {/* Spacing to Avoid Overlap */}
-        <div className="mt-20 w-full">
+        <div className="flex flex-col justify-center items-center w-full">
           <Routes>
             <Route
               path="/"
               element={
                 !authenticated ? (
-                  <div className="flex flex-col gap-10 mt-10">
-                    {/* SignUp / Login Toggle */}
-                    <div className="w-[80%] max-w-[500px] mx-auto">
+                  <div className="flex flex-col gap-6 items-center">
+                    <div className="w-[80%] max-w-[500px]">
                       {isSignUp ? (
                         <SignUp setAuthenticated={setAuthenticated} />
                       ) : (
                         <Login setAuthenticated={setAuthenticated} />
                       )}
                     </div>
-                    <div className="w-[80%] max-w-[500px] mx-auto mt-5">
-                      <button
-                        className="text-blue-500"
-                        onClick={() => setIsSignUp(!isSignUp)}
-                      >
-                        {isSignUp
-                          ? "Already have an account? Login"
-                          : "Don't have an account? Sign Up"}
-                      </button>
-                    </div>
+                    <button
+                      className="text-blue-500"
+                      onClick={() => setIsSignUp(!isSignUp)}
+                    >
+                      {isSignUp
+                        ? "Already have an account? Login"
+                        : "Don't have an account? Sign Up"}
+                    </button>
                   </div>
                 ) : (
                   <>
-                    {/* Title */}
                     <h1 className="text-2xl font-light italic text-[#e04433] mt-4 mb-4 text-shadow-lg">
-                      Food<span className="text-lg font-bold text-white">Application!</span>
+                      Food
+                      <span className="text-lg font-bold text-white">
+                        Application!
+                      </span>
                     </h1>
 
-                    {/* Search Form */}
                     <form
                       onSubmit={onSubmit}
                       className="relative flex flex-col sm:flex-row justify-center items-center bg-gray-300 rounded-lg w-[90%] max-w-[60rem] p-4 mb-10 shadow-2xl"
@@ -127,12 +123,11 @@ function App() {
                       <input
                         type="submit"
                         value="Search"
-                        className="w-full sm:w-[25%] h-[3rem] bg-[#40b48e] text-white uppercase text-xl rounded-md"
+                        className="w-full sm:w-[25%] h-[3rem] bg-[#2c76ac] text-white uppercase text-xl rounded-md"
                       />
                     </form>
 
-                    {/* Recipes Grid */}
-                    <div className="recipes grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 w-[90%]">
+                    <div className="recipes grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 w-[90%] max-w-[60rem] mx-auto">
                       {recipes.length > 0 &&
                         recipes.map((recipe) => (
                           <Recipe key={recipe.id} recipe={recipe} />
@@ -141,15 +136,6 @@ function App() {
                   </>
                 )
               }
-            />
-
-            <Route
-              path="/login"
-              element={<Login setAuthenticated={setAuthenticated} />}
-            />
-            <Route
-              path="/signup"
-              element={<SignUp setAuthenticated={setAuthenticated} />}
             />
           </Routes>
         </div>

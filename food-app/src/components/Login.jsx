@@ -43,7 +43,7 @@ const Login = ({ setAuthenticated }) => {
         />
         <button
           type="submit"
-          className="w-full py-2 bg-[#315e4f] text-white rounded-md"
+          className="w-full py-2 bg-[#2a53cd] text-white rounded-md"
         >
           Login
         </button>
