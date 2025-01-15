@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import supabase from "./supabaseClient";
-import Navbar from "./Navbar";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Recipe from "./components/Recipe";
 import Alert from "./components/Alert";
 import Axios from "axios";
-import image from "./assets/image1.jpg";
+//import image from "./assets/image1.jpg";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -30,7 +29,9 @@ function App() {
         }
 
         localStorage.setItem("recipes", JSON.stringify(result.data.hits));
-        setRecipes(result.data.hits.map((hit) => ({ ...hit, id: hit.recipe.uri })));
+        setRecipes(
+          result.data.hits.map((hit) => ({ ...hit, id: hit.recipe.uri }))
+        );
         setQuery("");
         setAlert("");
       } catch (error) {
@@ -68,13 +69,42 @@ function App() {
 
   return (
     <Router>
-      <div
-        className="App flex flex-col justify-center items-center min-h-screen bg-cover bg-center w-full overflow-x-hidden"
-        style={{ backgroundImage: `url(${image})` }}
+      <div 
+        className="App flex flex-col min-h-screen bg-gray-100" 
       >
-        <Navbar setAuthenticated={setAuthenticated} />
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-800 text-white shadow-md flex justify-between items-center p-4"> 
+          <h1 className="text-xl text-red-500"><span className="text-blue-500">Food-</span>Bank</h1> 
+          <form onSubmit={onSubmit} className="flex"> 
+            <input
+              type="text"
+              name="query"
+              value={query} 
+              onChange={onChange} 
+              autoComplete="off"
+              placeholder="Search Food"
+              className="w-full sm:w-64 h-[3rem] px-2 mb-2 sm:mb-0 sm:mr-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 text-black" // Added text-black here
+            />
+            <button
+              type="submit"
+              className="w-full sm:w-24 h-[3rem] bg-blue-500 text-white hover:bg-blue-600 rounded-md cursor-pointer" 
+            >
+              Search
+            </button>
+          </form>
+          {authenticated && (
+            <button
+              onClick={() => {
+                supabase.auth.signOut();
+                setAuthenticated(false); 
+              }}
+              className="bg-blue-500 hover:bg-red-500 text-white-500 font-bold py-2 px-4 rounded" 
+            >
+              Logout
+            </button>
+          )}
+        </nav>
 
-        <div className="flex flex-col justify-center items-center w-full">
+        <div className="container mx-auto mt-20"> {/* Adjust top margin to account for navbar height */} 
           <Routes>
             <Route
               path="/"
@@ -99,38 +129,14 @@ function App() {
                   </div>
                 ) : (
                   <>
-                    <h1 className="text-2xl font-light italic text-[#e04433] mt-4 mb-4 text-shadow-lg">
-                      Food
-                      <span className="text-lg font-bold text-white">
-                        Application!
-                      </span>
-                    </h1>
-
-                    <form
-                      onSubmit={onSubmit}
-                      className="relative flex flex-col sm:flex-row justify-center items-center bg-gray-300 rounded-lg w-[90%] max-w-[60rem] p-4 mb-10 shadow-2xl"
-                    >
-                      {alert && <Alert alert={alert} />}
-                      <input
-                        type="text"
-                        name="query"
-                        onChange={onChange}
-                        value={query}
-                        autoComplete="off"
-                        placeholder="Search Food"
-                        className="w-full sm:w-[60%] h-[3rem] px-2 mb-2 sm:mb-0 sm:mr-2 text-gray-600 border-b border-gray-300 text-xl rounded-md"
-                      />
-                      <input
-                        type="submit"
-                        value="Search"
-                        className="w-full sm:w-[25%] h-[3rem] bg-[#2c76ac] text-white uppercase text-xl rounded-md"
-                      />
-                    </form>
+                    <h1 className="text-3xl font-bold text-center mb-4 mt-5">
+                     Your Food Bank!
+                    </h1> 
 
                     <div className="recipes grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-4 w-[90%] max-w-[60rem] mx-auto">
                       {recipes.length > 0 &&
                         recipes.map((recipe) => (
-                          <Recipe key={recipe.id} recipe={recipe} />
+                          <Recipe key={recipe.id} recipe={recipe} /> 
                         ))}
                     </div>
                   </>
